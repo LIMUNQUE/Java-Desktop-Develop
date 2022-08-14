@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -20,6 +21,11 @@ public class PrincipalController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    @FXML
+    private Button btnConsultaPartido;
+    private Button btnConsultaMundial;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
