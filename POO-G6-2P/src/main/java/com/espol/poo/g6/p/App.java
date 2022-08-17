@@ -16,10 +16,11 @@ public class App extends Application {
     private static Scene scene;
     public static String pathImg="src/main/resources/";
     public static String pathPaises="src/main/resources/Paises/";
+    public static String pathUI="src/main/resources/UI/";
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("ConsultarPartido"), 640, 480);
+        scene = new Scene(loadFXML("Principal"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
