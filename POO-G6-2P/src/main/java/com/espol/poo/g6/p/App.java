@@ -14,7 +14,8 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    public static String pathImg="src/main/resources/com/espol/poo/g6/p/";
+    public static String pathImg="src/main/resources/";
+    public static String pathPaises="src/main/resources/Paises/";
 
     @Override
     public void start(Stage stage) throws IOException {

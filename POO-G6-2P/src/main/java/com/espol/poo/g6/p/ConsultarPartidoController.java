@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import Clases.ManejoDeArchivos;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -40,6 +41,7 @@ public class ConsultarPartidoController implements Initializable {
         cbxFase.getItems().addAll("Group","Round of 16","Quarter-finals","Play-off for third place","Semi-finals","Final");
         
         cbxFase.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
             public void handle(ActionEvent e){
                 //Si en Fase se selecciona Group se debe mostrar los Grupos
                 if(cbxFase.getValue().equals("Group")){
@@ -74,6 +76,8 @@ public class ConsultarPartidoController implements Initializable {
             infoContainer.getChildren().clear();
             Label puntaje=new Label(null);
             String path;
+            ImageView imgvLeft = new ImageView();
+            ImageView imgvRight = new ImageView();
             for(String[] dato: texto){//Leer  el doc en busca del partido Solicitado
                 if(cbxGrupos.getValue()==null){
                     path = cbxFase.getValue();
@@ -82,11 +86,14 @@ public class ConsultarPartidoController implements Initializable {
                     path = cbxFase.getValue()+" "+cbxGrupos.getValue();
                 }//Si es un Grupo se busca tambien por su letra
                 if(dato[2].equals(path)){
-                    if(dato[5].equals(cbx1.getValue())){
-                        if(dato[8].equals(cbx2.getValue())){
-                            //Se guarda en el label puntaje el valor de ambos goals
-                            puntaje.setText(dato[6] + " - " + dato[7]);
-                        }
+                    if(dato[5].equals(cbx1.getValue()) && dato[8].equals(cbx2.getValue())){
+                        //Se guarda en el label puntaje el valor de ambos goals
+                        puntaje.setText(dato[6] + " - " + dato[7]);
+                        
+                        //imageLeft = new Image(ManejoDeArchivos.cargarImagen(dato[5]));
+                        imgvLeft = new ImageView(ManejoDeArchivos.cargarImagen(dato[5]));
+                        imgvRight = new ImageView(ManejoDeArchivos.cargarImagen(dato[8]));
+                        
                     }
                 }
             }
@@ -99,6 +106,11 @@ public class ConsultarPartidoController implements Initializable {
                 infoContainer.getChildren().addAll(puntaje);
             }
             else{//Caso contrario se muestra el contenido
+                
+                HBox hbox = new HBox();
+                hbox.setSpacing(50);
+                hbox.setAlignment(Pos.CENTER);
+                hbox.getChildren().addAll(imgvLeft,imgvRight);
                 Label lblresp = new Label("Resultados del Partido");
                 lblresp.setFont(new Font("Serif", 24));
                 Label grupo;
@@ -106,7 +118,7 @@ public class ConsultarPartidoController implements Initializable {
                 else grupo = new Label(cbxFase.getValue());
          
                 grupo.setFont(new Font("Serif", 14));
-                infoContainer.getChildren().addAll(lblresp,grupo,puntaje);
+                infoContainer.getChildren().addAll(lblresp,grupo,puntaje,hbox);
             }
             
         }
@@ -139,4 +151,6 @@ public class ConsultarPartidoController implements Initializable {
         cbx1.getItems().addAll(countriesLeft);
         cbx2.getItems().addAll(countriesRight);
     }
+    
+    
 }
