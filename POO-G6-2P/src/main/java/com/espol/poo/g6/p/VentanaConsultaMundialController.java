@@ -7,12 +7,15 @@ package com.espol.poo.g6.p;
 import Clases.AnioMundialException;
 import Clases.Mundial;
 import LecturaEscritura.LecturaEscrituraArchivos;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -53,9 +56,11 @@ public class VentanaConsultaMundialController implements Initializable {
         Label anio = new Label("Año:");
         TextField anioMundial = new TextField();
         Button btnConsultar = new Button("Consultar");
+        Button btnRefrescar = new Button("Limpiar consulta");
 
         lblTitulo.setStyle("-fx-font-size: 20;-fx-text-fill: black;-fx-font-weight: bold");
         btnConsultar.setStyle("-fx-background-color: #259bd7;-fx-text-fill: white;-fx-background-radius:4");
+        btnRefrescar.setStyle("-fx-background-color: #259bd7;-fx-text-fill: white;-fx-background-radius:4");
 
         hbox1.getChildren().addAll(anio, anioMundial, btnConsultar);
         hbox1.setAlignment(Pos.TOP_CENTER);
@@ -65,11 +70,25 @@ public class VentanaConsultaMundialController implements Initializable {
         rootVentanaMundial.setSpacing(20);
         Insets insetRoot = new Insets(20, 5, 5, 20);
         rootVentanaMundial.setPadding(insetRoot);
-
+        
+        
         btnConsultar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            
             @Override
             public void handle(ActionEvent event) {
-                nuevaSeccion.getChildren().clear();
+                
+                Label advertencia = new Label("");
+                if(anioMundial.getText().equals("")){
+                    advertencia.setText("Ingrese una fecha para consultar");
+                    advertencia.setStyle("-fx-font-size: 15;-fx-text-fill: red;-fx-font-weight: bold");
+                    rootVentanaMundial.getChildren().add(advertencia);
+                }
+                else if(!verificacionAnio(anioMundial.getText())){
+                    advertencia.setText("La fecha ingresada no existe en los mundiales.");
+                    advertencia.setStyle("-fx-font-size: 15;-fx-text-fill: red;-fx-font-weight: bold");
+                    rootVentanaMundial.getChildren().add(advertencia);
+                }
+                else{
                 nuevaSeccion.setPadding(new Insets(30, 0, 0, 0));
                 nuevaSeccion.setHgap(30);
                 nuevaSeccion.setVgap(15);
@@ -94,8 +113,24 @@ public class VentanaConsultaMundialController implements Initializable {
                 nuevaSeccion.setGridLinesVisible(false);
                 nuevaSeccion.addColumn(0, premios, lblganador, lblsegundo, lbltercero, lblcuarto);
                 nuevaSeccion.add(datos, 4, 0);
-
+                
+                try{
                 rootVentanaMundial.getChildren().add(nuevaSeccion);
+                }catch(IllegalArgumentException e){
+                    System.out.println(e.getMessage());
+                }
+                rootVentanaMundial.getChildren().remove(1);
+                rootVentanaMundial.getChildren().add(1, btnRefrescar);
+            }
+            }
+        });
+
+        btnRefrescar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                limpiarSeccion();
+                rootVentanaMundial.getChildren().remove(1);
+                rootVentanaMundial.getChildren().add(1, hbox1);
             }
         });
 
@@ -104,7 +139,7 @@ public class VentanaConsultaMundialController implements Initializable {
     public void mostrarDatosGenerales(String anioEscogido) {
 
         ArrayList<Mundial> datosMundiales = LecturaEscrituraArchivos.LeeArchivoMundial("WorldCups.csv");
-
+        
         for (Mundial datoMundial : datosMundiales) {
             if (datoMundial.getAño().equals(anioEscogido)) {
                 Label ganador = new Label(datoMundial.getGanador());
@@ -221,8 +256,8 @@ public class VentanaConsultaMundialController implements Initializable {
         } catch (IOException e2) {
             System.out.println(e2.getMessage());
         }
-        
-        mostrarCopasGanadas(ganador,segundo,tercero,cuarto);
+
+        mostrarCopasGanadas(ganador, segundo, tercero, cuarto);
 
         nuevaSeccion.add(banderaGanador, 1, 1);
         nuevaSeccion.add(banderaSegundo, 1, 2);
@@ -247,7 +282,7 @@ public class VentanaConsultaMundialController implements Initializable {
 
         try ( FileInputStream lector = new FileInputStream(App.pathImg + "imagenesMundial/copa2014.png")) {
             Image copa = new Image(lector);
-            
+
             for (Mundial datoMundial : datosMundiales) {
                 if (datoMundial.getGanador().equals(primero)) {
                     imgv1 = new ImageView(copa);
@@ -264,7 +299,7 @@ public class VentanaConsultaMundialController implements Initializable {
                     imgv3.setFitWidth(20);
                     imgv3.setPreserveRatio(true);
                     copasTercero.getChildren().add(imgv3);
-                } else if (datoMundial.getGanador().equals(cuarto)){
+                } else if (datoMundial.getGanador().equals(cuarto)) {
                     imgv4 = new ImageView(copa);
                     imgv4.setFitWidth(20);
                     imgv4.setPreserveRatio(true);
@@ -277,12 +312,30 @@ public class VentanaConsultaMundialController implements Initializable {
         } catch (IOException e2) {
             System.out.println(e2.getMessage());
         }
-        
+
         nuevaSeccion.add(copasPrimero, 3, 1);
         nuevaSeccion.add(copasSegundo, 3, 2);
         nuevaSeccion.add(copasTercero, 3, 3);
         nuevaSeccion.add(copasCuarto, 3, 4);
 
+    }
+
+    public void limpiarSeccion() {
+        nuevaSeccion.getChildren().clear();
+    }
+    
+    public boolean verificacionAnio(String anio){
+        ArrayList<String> anios = new ArrayList<>();
+        try(BufferedReader lector = new BufferedReader(new FileReader("WorldCups.csv"))){
+            String linea;
+            while((linea = lector.readLine())!= null){
+                String [] datos = linea.split(",");
+                anios.add(datos[0]);
+            }
+        }catch(IOException e1){
+            System.out.println("No se ha encontrado el archivo");
+        }
+        return anios.contains(anio);
     }
 
 }
