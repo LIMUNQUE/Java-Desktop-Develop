@@ -216,7 +216,7 @@ public class VentanaConsultaMundialController implements Initializable {
         ImageView banderaTercero = new ImageView();
         ImageView banderaCuarto = new ImageView();
 
-        try ( FileInputStream lector = new FileInputStream(App.pathImg + "imagenesMundial/" + ganador + ".png")) {
+        try ( FileInputStream lector = new FileInputStream(App.pathImg+ ganador + ".png")) {
 
             Image imagenGanador = new Image(lector);
             banderaGanador.setImage(imagenGanador);
@@ -229,7 +229,7 @@ public class VentanaConsultaMundialController implements Initializable {
             System.out.println(e2.getMessage());
         }
 
-        try ( FileInputStream lector = new FileInputStream(App.pathImg + "imagenesMundial/" + segundo + ".png")) {
+        try ( FileInputStream lector = new FileInputStream(App.pathImg+ segundo + ".png")) {
 
             Image imagenSegundo = new Image(lector);
             banderaSegundo.setImage(imagenSegundo);
@@ -242,7 +242,7 @@ public class VentanaConsultaMundialController implements Initializable {
             System.out.println(e2.getMessage());
         }
 
-        try ( FileInputStream lector = new FileInputStream(App.pathImg + "imagenesMundial/" + tercero + ".png")) {
+        try ( FileInputStream lector = new FileInputStream(App.pathImg+ tercero + ".png")) {
 
             Image imagenTercero = new Image(lector);
             banderaTercero.setImage(imagenTercero);
@@ -255,7 +255,7 @@ public class VentanaConsultaMundialController implements Initializable {
             System.out.println(e2.getMessage());
         }
 
-        try ( FileInputStream lector = new FileInputStream(App.pathImg + "imagenesMundial/" + cuarto + ".png")) {
+        try ( FileInputStream lector = new FileInputStream(App.pathImg+ cuarto + ".png")) {
 
             Image imagenCuarto = new Image(lector);
             banderaCuarto.setImage(imagenCuarto);
@@ -291,7 +291,7 @@ public class VentanaConsultaMundialController implements Initializable {
         ImageView imgv3 = null;
         ImageView imgv4 = null;
 
-        try ( FileInputStream lector = new FileInputStream(App.pathImg + "imagenesMundial/copa2014.png")) {
+        try ( FileInputStream lector = new FileInputStream(App.pathImg + "copa2014.png")) {
             Image copa = new Image(lector);
 
             for (Mundial datoMundial : datosMundiales) {

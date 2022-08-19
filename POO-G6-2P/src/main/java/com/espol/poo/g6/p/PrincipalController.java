@@ -41,8 +41,12 @@ public class PrincipalController implements Initializable {
         // TODO
     }    
     @FXML
-    void ConsultarCopasMundiales(ActionEvent event) {
-
+    void ConsultarCopasMundiales(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("VentanaConsultaMundial.fxml"));
+        Scene scene = new Scene(root,640, 480);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
