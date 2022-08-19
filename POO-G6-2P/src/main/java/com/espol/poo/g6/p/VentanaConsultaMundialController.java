@@ -70,59 +70,70 @@ public class VentanaConsultaMundialController implements Initializable {
         rootVentanaMundial.setSpacing(20);
         Insets insetRoot = new Insets(20, 5, 5, 20);
         rootVentanaMundial.setPadding(insetRoot);
-        
-        
+
         btnConsultar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            
+
             @Override
             public void handle(ActionEvent event) {
-                
-                Label advertencia = new Label("");
-                if(anioMundial.getText().equals("")){
+
+                Label advertencia = new Label();
+              
+                if (anioMundial.getText().equals("")) {
                     advertencia.setText("Ingrese una fecha para consultar");
                     advertencia.setStyle("-fx-font-size: 15;-fx-text-fill: red;-fx-font-weight: bold");
+                    try{
+                    rootVentanaMundial.getChildren().remove(2);
+                    }catch(IndexOutOfBoundsException e){
+                    }
                     rootVentanaMundial.getChildren().add(advertencia);
-                }
-                else if(!verificacionAnio(anioMundial.getText())){
-                    advertencia.setText("La fecha ingresada no existe en los mundiales.");
+                } else if (!verificacionAnio(anioMundial.getText())) {
+                    advertencia.setText("En el año ingresado no hubo mundial. Intente de nuevo.");
                     advertencia.setStyle("-fx-font-size: 15;-fx-text-fill: red;-fx-font-weight: bold");
+                    try{
+                    rootVentanaMundial.getChildren().remove(2);
+                    }catch(IndexOutOfBoundsException e){
+                    }   
                     rootVentanaMundial.getChildren().add(advertencia);
+                } else {
+                    try{
+                    rootVentanaMundial.getChildren().remove(2);
+                    }catch(IndexOutOfBoundsException e){
+                    }   
+                    nuevaSeccion.setPadding(new Insets(30, 0, 0, 0));
+                    nuevaSeccion.setHgap(30);
+                    nuevaSeccion.setVgap(15);
+
+                    Label premios = new Label("Premios");
+                    premios.setStyle("-fx-font-size: 20;-fx-text-fill: black;-fx-font-weight: bold;-fx-underline:true");
+                    Label datos = new Label("Datos generales");
+                    datos.setStyle("-fx-font-size: 20;-fx-text-fill: black;-fx-font-weight: bold;-fx-underline:true");
+                    Label lblganador = new Label("Ganador");
+                    lblganador.setStyle("-fx-font-size: 15;-fx-text-fill: grey;-fx-font-style: Italic");
+                    Label lblsegundo = new Label("Segundo");
+                    lblsegundo.setStyle("-fx-font-size: 15;-fx-text-fill: grey;-fx-font-style: Italic");
+                    Label lbltercero = new Label("Tercero");
+                    lbltercero.setStyle("-fx-font-size: 15;-fx-text-fill: grey;-fx-font-style: Italic");
+                    Label lblcuarto = new Label("Cuarto");
+                    lblcuarto.setStyle("-fx-font-size: 15;-fx-text-fill: grey;-fx-font-style: Italic");
+
+                    mostrarDatosGenerales(anioMundial.getText());
+
+                    mostrarPremios(anioMundial.getText());
+
+                    nuevaSeccion.setGridLinesVisible(false);
+                    nuevaSeccion.addColumn(0, premios, lblganador, lblsegundo, lbltercero, lblcuarto);
+                    nuevaSeccion.add(datos, 4, 0);
+
+                    try {
+                        rootVentanaMundial.getChildren().add(nuevaSeccion);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    rootVentanaMundial.getChildren().remove(1);
+                    rootVentanaMundial.getChildren().add(1, btnRefrescar);
                 }
-                else{
-                nuevaSeccion.setPadding(new Insets(30, 0, 0, 0));
-                nuevaSeccion.setHgap(30);
-                nuevaSeccion.setVgap(15);
-
-                Label premios = new Label("Premios");
-                premios.setStyle("-fx-font-size: 20;-fx-text-fill: black;-fx-font-weight: bold;-fx-underline:true");
-                Label datos = new Label("Datos generales");
-                datos.setStyle("-fx-font-size: 20;-fx-text-fill: black;-fx-font-weight: bold;-fx-underline:true");
-                Label lblganador = new Label("Ganador");
-                lblganador.setStyle("-fx-font-size: 15;-fx-text-fill: grey;-fx-font-style: Italic");
-                Label lblsegundo = new Label("Segundo");
-                lblsegundo.setStyle("-fx-font-size: 15;-fx-text-fill: grey;-fx-font-style: Italic");
-                Label lbltercero = new Label("Tercero");
-                lbltercero.setStyle("-fx-font-size: 15;-fx-text-fill: grey;-fx-font-style: Italic");
-                Label lblcuarto = new Label("Cuarto");
-                lblcuarto.setStyle("-fx-font-size: 15;-fx-text-fill: grey;-fx-font-style: Italic");
-
-                mostrarDatosGenerales(anioMundial.getText());
-
-                mostrarPremios(anioMundial.getText());
-
-                nuevaSeccion.setGridLinesVisible(false);
-                nuevaSeccion.addColumn(0, premios, lblganador, lblsegundo, lbltercero, lblcuarto);
-                nuevaSeccion.add(datos, 4, 0);
-                
-                try{
-                rootVentanaMundial.getChildren().add(nuevaSeccion);
-                }catch(IllegalArgumentException e){
-                    System.out.println(e.getMessage());
-                }
-                rootVentanaMundial.getChildren().remove(1);
-                rootVentanaMundial.getChildren().add(1, btnRefrescar);
             }
-            }
+            
         });
 
         btnRefrescar.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
@@ -139,7 +150,7 @@ public class VentanaConsultaMundialController implements Initializable {
     public void mostrarDatosGenerales(String anioEscogido) {
 
         ArrayList<Mundial> datosMundiales = LecturaEscrituraArchivos.LeeArchivoMundial("WorldCups.csv");
-        
+
         for (Mundial datoMundial : datosMundiales) {
             if (datoMundial.getAño().equals(anioEscogido)) {
                 Label ganador = new Label(datoMundial.getGanador());
@@ -323,16 +334,16 @@ public class VentanaConsultaMundialController implements Initializable {
     public void limpiarSeccion() {
         nuevaSeccion.getChildren().clear();
     }
-    
-    public boolean verificacionAnio(String anio){
+
+    public boolean verificacionAnio(String anio) {
         ArrayList<String> anios = new ArrayList<>();
-        try(BufferedReader lector = new BufferedReader(new FileReader("WorldCups.csv"))){
+        try ( BufferedReader lector = new BufferedReader(new FileReader("WorldCups.csv"))) {
             String linea;
-            while((linea = lector.readLine())!= null){
-                String [] datos = linea.split(",");
+            while ((linea = lector.readLine()) != null) {
+                String[] datos = linea.split(",");
                 anios.add(datos[0]);
             }
-        }catch(IOException e1){
+        } catch (IOException e1) {
             System.out.println("No se ha encontrado el archivo");
         }
         return anios.contains(anio);
