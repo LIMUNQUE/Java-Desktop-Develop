@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
  *
  * @author Joshua
  */
-public class  ManejoDeArchivos {
+public class ManejoDeArchivos {
     Image a;
     public static ArrayList<String[]> Leer(String path){
         ArrayList<String[]> texto = new ArrayList<>();
@@ -32,7 +32,7 @@ public class  ManejoDeArchivos {
     
     public static Image cargarImagen(String pais){
         try(FileInputStream input = new FileInputStream(App.pathPaises+pais+".png")){
-                return new Image(input,160,138,true,false);
+                return new Image(input,80,69,true,false);
             }
             catch(IOException exc){System.out.println(exc.getMessage());}
         return null;

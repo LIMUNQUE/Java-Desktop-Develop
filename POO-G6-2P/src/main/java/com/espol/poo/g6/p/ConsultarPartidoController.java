@@ -21,7 +21,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import Clases.ManejoDeArchivos;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Date;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -55,8 +69,10 @@ public class ConsultarPartidoController implements Initializable {
         });
         
         cbxGrupos.setOnAction(e->Actualizar());
-    }    
-    
+
+        
+        
+    }
     @FXML
     private Button brnConsultar;
     @FXML
@@ -78,6 +94,9 @@ public class ConsultarPartidoController implements Initializable {
             String path;
             ImageView imgvLeft = new ImageView();
             ImageView imgvRight = new ImageView();
+            
+            String fechaPartido = "";
+            
             for(String[] dato: texto){//Leer  el doc en busca del partido Solicitado
                 if(cbxGrupos.getValue()==null){
                     path = cbxFase.getValue();
@@ -88,12 +107,128 @@ public class ConsultarPartidoController implements Initializable {
                 if(dato[2].equals(path)){
                     if(dato[5].equals(cbx1.getValue()) && dato[8].equals(cbx2.getValue())){
                         //Se guarda en el label puntaje el valor de ambos goals
-                        puntaje.setText(dato[6] + " - " + dato[7]);
                         
-                        //imageLeft = new Image(ManejoDeArchivos.cargarImagen(dato[5]));
+                        
                         imgvLeft = new ImageView(ManejoDeArchivos.cargarImagen(dato[5]));
                         imgvRight = new ImageView(ManejoDeArchivos.cargarImagen(dato[8]));
+                        String[] datoFecha = dato[1].split(" ");
+                        fechaPartido = datoFecha[0]+"-"+datoFecha[1]+"-"+datoFecha[2];
                         
+                        //Empezamos a escribir el container
+
+                        //Título
+                        Label lblresp = new Label("Resultados del Partido");
+                        lblresp.setFont(new Font("Serif", 24));
+                        
+                        //Fecha
+                        SimpleDateFormat formatter=new SimpleDateFormat("dd-MMM-yyyy");
+                        Label fecha = null;
+                        try {
+                            Date date = formatter.parse(fechaPartido);
+                            
+                            LocalDate someDate = LocalDate.of(date.getYear(), date.getMonth()+1, date.getDay()+1);
+                          
+                            String dia = someDate.getDayOfWeek().toString();
+                            fecha = new Label(dia.substring(0,1).toUpperCase() + dia.substring(1).toLowerCase()+
+                                    " " + Integer.parseInt(datoFecha[0]) + " " + someDate.getMonth().name());
+         
+                            fecha.setFont(new Font("Serif", 20));
+                            fecha.setPadding(new Insets(10, 0, 20, 0));
+                        } catch (ParseException | RuntimeException ex) {System.out.println(ex.getMessage());}
+                        
+                        //DETALLES
+                        Label fechaActual = new Label(dato[1]);
+                        Label lugar = new Label(dato[3]);
+                        Label ciudad = new Label(dato[4]);
+                        HBox containerDetalles = new HBox();
+                        VBox detalles = new VBox();
+                        //*Grupo
+                        Label grupo;
+                        if(cbxFase.getValue().equals("Group")) grupo = new Label("Grupo " + cbxGrupos.getValue());
+                        else grupo = new Label(cbxFase.getValue());
+                        grupo.setFont(new Font("Serif", 13));
+                        detalles.getChildren().addAll(fechaActual,grupo,lugar,ciudad);
+                        
+                        //Pais1
+                        HBox paisLeft = new HBox();
+                        Label nombreLeft = new Label(dato[5]);
+                        nombreLeft.setFont(new Font("Serif", 14));
+                        paisLeft.getChildren().addAll(nombreLeft,imgvLeft);
+                        paisLeft.setSpacing(5);
+                        //Pais2
+                        HBox paisRight = new HBox();
+                        Label nombreRight = new Label(dato[5]);
+                        nombreRight.setFont(new Font("Serif", 14));
+                        paisRight.getChildren().addAll(nombreRight,imgvRight);
+                        paisRight.setSpacing(5);
+                        
+                        if(dato[5].compareTo(dato[8])>0){
+                            puntaje.setText(dato[6] + " - " + dato[7]);
+                            containerDetalles.getChildren().addAll(detalles,paisLeft,puntaje,paisRight);
+                        }
+                        else{
+                            puntaje.setText(dato[7] + " - " + dato[6]);
+                            containerDetalles.getChildren().addAll(detalles,paisRight,puntaje,paisLeft);
+                        }
+                        
+                        containerDetalles.setSpacing(50);
+                        containerDetalles.setAlignment(Pos.CENTER);
+                        //Añadir al container
+                        HBox hboxFecha = new HBox();
+                        hboxFecha.getChildren().addAll(fecha);
+                        
+                        VBox botones = new VBox();
+                        String estilo = "-fx-text-fill: white;-fx-font-weight: bold;-fx-background-color:#40abe8";
+                        Button btnExportar = new Button("Exportar resultados de grupos");
+                        btnExportar.setMinWidth(200);
+                        btnExportar.setStyle(estilo);
+                        Button btnVer = new Button("Ver detalles de equipos");
+                        btnVer.setMinWidth(200);
+                        btnVer.setStyle(estilo);
+                        botones.getChildren().addAll(btnExportar,btnVer);
+                        botones.setAlignment(Pos.CENTER);
+                        botones.setSpacing(10);
+                        infoContainer.getChildren().clear();
+                        infoContainer.getChildren().addAll(lblresp,hboxFecha,containerDetalles,botones);
+                        infoContainer.setSpacing(5);
+                        
+                        
+                        //Lógica de los botones
+                        btnExportar.setOnAction(new EventHandler<ActionEvent>(){
+                            @Override
+                            public void handle(ActionEvent e){
+                                Stage stage = new Stage();
+                                VBox root = new VBox();
+                                Label msg = new Label("¿Está seguro que desea exportar el grupo de jugadores seleccionado?");
+                                msg.setFont(new Font("Serif", 15));
+                                Button btnAceptar =new Button("aceptar");
+                                Button btnCancelar = new Button("Cancelar");
+                                HBox buttons = new HBox();
+                                buttons.getChildren().addAll(btnAceptar,btnCancelar);
+                                buttons.setSpacing(10);
+                                buttons.setAlignment(Pos.CENTER_RIGHT);
+                                root.getChildren().addAll(msg,buttons);
+                                root.setSpacing(40);
+                                root.setAlignment(Pos.CENTER);
+                                
+                                btnCancelar.setOnAction(new EventHandler<ActionEvent>(){
+                                    public void handle(ActionEvent e2){
+                                        Stage s = (Stage)btnCancelar.getScene().getWindow();
+                                        s.close();
+                                    }
+                                });
+                                
+                                btnAceptar.setOnAction(new EventHandler<ActionEvent>(){
+                                    public void handle(ActionEvent e2){
+                                        //Serializar
+                                    }
+                                });
+                                
+                                Scene scene = new Scene(root,420, 240);
+                                stage.setScene(scene);
+                                stage.show();
+                            }
+                        });
                     }
                 }
             }
@@ -105,21 +240,7 @@ public class ConsultarPartidoController implements Initializable {
                 puntaje.setText("No se encontró el partido");
                 infoContainer.getChildren().addAll(puntaje);
             }
-            else{//Caso contrario se muestra el contenido
-                
-                HBox hbox = new HBox();
-                hbox.setSpacing(50);
-                hbox.setAlignment(Pos.CENTER);
-                hbox.getChildren().addAll(imgvLeft,imgvRight);
-                Label lblresp = new Label("Resultados del Partido");
-                lblresp.setFont(new Font("Serif", 24));
-                Label grupo;
-                if(cbxFase.getValue().equals("Group")) grupo = new Label("Grupo " + cbxGrupos.getValue());
-                else grupo = new Label(cbxFase.getValue());
-         
-                grupo.setFont(new Font("Serif", 14));
-                infoContainer.getChildren().addAll(lblresp,grupo,puntaje,hbox);
-            }
+            
             
         }
         
