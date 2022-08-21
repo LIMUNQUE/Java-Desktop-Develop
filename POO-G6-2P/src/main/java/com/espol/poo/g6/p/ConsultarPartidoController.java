@@ -4,7 +4,7 @@
  */
 package com.espol.poo.g6.p;
 
-import java.io.IOException;
+import Clases.Jugador;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -19,23 +19,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
 import Clases.ManejoDeArchivos;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.Date;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -48,10 +40,13 @@ public class ConsultarPartidoController implements Initializable {
      * Initializes the controller class.
      */
     ArrayList<String[]> texto;
+    ArrayList<String[]> textoJugadores;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Leemos el archivo y lo guardamos para no tener que leerlo nuevamente
-        texto = ManejoDeArchivos.Leer("WorldCupMatchesBrasil2014.csv");
+        texto = ManejoDeArchivos.Leer("WorldCupMatchesBrasil2014.csv","\\|");
+        textoJugadores = ManejoDeArchivos.Leer("WorldCupPlayersBrasil2014.csv",",");
         cbxFase.getItems().addAll("Group","Round of 16","Quarter-finals","Play-off for third place","Semi-finals","Final");
         
         cbxFase.setOnAction(new EventHandler<ActionEvent>(){
@@ -69,12 +64,7 @@ public class ConsultarPartidoController implements Initializable {
         });
         
         cbxGrupos.setOnAction(e->Actualizar());
-
-        
-        
     }
-    @FXML
-    private Button brnConsultar;
     @FXML
     private ComboBox<String> cbx1;
     @FXML
@@ -92,23 +82,17 @@ public class ConsultarPartidoController implements Initializable {
             infoContainer.getChildren().clear();
             Label puntaje=new Label(null);
             String path;
-            ImageView imgvLeft = new ImageView();
-            ImageView imgvRight = new ImageView();
+            ImageView imgvLeft;
+            ImageView imgvRight;
             
-            String fechaPartido = "";
-            
+            String fechaPartido;
+            if(cbxGrupos.getValue()==null){path = cbxFase.getValue();}
+            //Si es un Grupo se busca tambien por su letra
+            else{path = cbxFase.getValue()+" "+cbxGrupos.getValue();}
             for(String[] dato: texto){//Leer  el doc en busca del partido Solicitado
-                if(cbxGrupos.getValue()==null){
-                    path = cbxFase.getValue();
-                }
-                else{
-                    path = cbxFase.getValue()+" "+cbxGrupos.getValue();
-                }//Si es un Grupo se busca tambien por su letra
-                if(dato[2].equals(path)){
+                if(dato[2].equals(path)){//Se pregunta si el equipo es el solicitado
                     if(dato[5].equals(cbx1.getValue()) && dato[8].equals(cbx2.getValue())){
                         //Se guarda en el label puntaje el valor de ambos goals
-                        
-                        
                         imgvLeft = new ImageView(ManejoDeArchivos.cargarImagen(dato[5]));
                         imgvRight = new ImageView(ManejoDeArchivos.cargarImagen(dato[8]));
                         String[] datoFecha = dato[1].split(" ");
@@ -127,7 +111,6 @@ public class ConsultarPartidoController implements Initializable {
                             Date date = formatter.parse(fechaPartido);
                             
                             LocalDate someDate = LocalDate.of(date.getYear(), date.getMonth()+1, date.getDay()+1);
-                          
                             String dia = someDate.getDayOfWeek().toString();
                             fecha = new Label(dia.substring(0,1).toUpperCase() + dia.substring(1).toLowerCase()+
                                     " " + Integer.parseInt(datoFecha[0]) + " " + someDate.getMonth().name());
@@ -157,7 +140,7 @@ public class ConsultarPartidoController implements Initializable {
                         paisLeft.setSpacing(5);
                         //Pais2
                         HBox paisRight = new HBox();
-                        Label nombreRight = new Label(dato[5]);
+                        Label nombreRight = new Label(dato[8]);
                         nombreRight.setFont(new Font("Serif", 14));
                         paisRight.getChildren().addAll(nombreRight,imgvRight);
                         paisRight.setSpacing(5);
@@ -176,7 +159,6 @@ public class ConsultarPartidoController implements Initializable {
                         //Añadir al container
                         HBox hboxFecha = new HBox();
                         hboxFecha.getChildren().addAll(fecha);
-                        
                         VBox botones = new VBox();
                         String estilo = "-fx-text-fill: white;-fx-font-weight: bold;-fx-background-color:#40abe8";
                         Button btnExportar = new Button("Exportar resultados de grupos");
@@ -191,7 +173,6 @@ public class ConsultarPartidoController implements Initializable {
                         infoContainer.getChildren().clear();
                         infoContainer.getChildren().addAll(lblresp,hboxFecha,containerDetalles,botones);
                         infoContainer.setSpacing(5);
-                        
                         
                         //Lógica de los botones
                         btnExportar.setOnAction(new EventHandler<ActionEvent>(){
@@ -212,6 +193,7 @@ public class ConsultarPartidoController implements Initializable {
                                 root.setAlignment(Pos.CENTER);
                                 
                                 btnCancelar.setOnAction(new EventHandler<ActionEvent>(){
+                                    @Override
                                     public void handle(ActionEvent e2){
                                         Stage s = (Stage)btnCancelar.getScene().getWindow();
                                         s.close();
@@ -219,8 +201,28 @@ public class ConsultarPartidoController implements Initializable {
                                 });
                                 
                                 btnAceptar.setOnAction(new EventHandler<ActionEvent>(){
+                                    @Override
                                     public void handle(ActionEvent e2){
                                         //Serializar
+                                        String path;
+                                        if(cbxGrupos.getValue()==null){path = cbxFase.getValue();}
+                                        else {path = cbxFase.getValue()+" "+cbxGrupos.getValue();}
+                                        
+                                        ArrayList<Jugador> jugadores = new ArrayList<>();
+                                        for(String[] dato: texto){
+                                            if(dato[2].equals(path)){
+                                                for(String[] datoJugador: textoJugadores){
+                                                    if(datoJugador[0].equals(dato[16])&&datoJugador[1].equals(dato[17])){
+                                                        Jugador j = new Jugador(datoJugador[6],datoJugador[2],datoJugador[5],datoJugador[3]);
+                                                        jugadores.add(j);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        ManejoDeArchivos.serializarObjeto("jugadores.Dat", jugadores);
+                                        System.out.println("Se pudo generar el archivo correctamente");
+                                        
+                                        
                                     }
                                 });
                                 
@@ -229,6 +231,12 @@ public class ConsultarPartidoController implements Initializable {
                                 stage.show();
                             }
                         });
+                        
+                        btnVer.setOnAction(new EventHandler<ActionEvent>(){
+                            public void handle(ActionEvent e2){
+                                //Abrir la ventana de detalles
+                            }
+                         });
                     }
                 }
             }
@@ -239,11 +247,8 @@ public class ConsultarPartidoController implements Initializable {
                 //Si puntaje no tiene texto es porque no se encontró el dato
                 puntaje.setText("No se encontró el partido");
                 infoContainer.getChildren().addAll(puntaje);
-            }
-            
-            
+            }  
         }
-        
     }
 
     public void Actualizar(){

@@ -4,48 +4,41 @@
  */
 package Clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Dell
  */
-public class Jugador {
+public class Jugador implements Serializable{
     
-    private String nombre;
+    
     private String numCamiseta;
     private String directorTecnico;
-    private String fotoJugador;
-    
-    public Jugador(String nombre, String numCamiseta, String directorTecnico, String fotoJugador){
-        this.nombre = nombre;
+    private String team;
+    private String name;
+    /*private String roundID;
+    private String matchID;
+    private String coachName;
+    private String shirtNumber;
+    private String position;*/
+    public Jugador(String nombre,String team, String numCamiseta, String directorTecnico){
+        this.name = nombre;
+        this.team = team;
         this.numCamiseta = numCamiseta;
         this.directorTecnico = directorTecnico;
-        this.fotoJugador = fotoJugador;
     }
     
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    public String getNumCamiseta() {
-        return numCamiseta;
-    }
-    public void setNumCamiseta(String numCamiseta) {
-        this.numCamiseta = numCamiseta;
-    }
-    public String getDirectorTecnico() {
-        return directorTecnico;
-    }
-    public void setDirectorTecnico(String directorTecnico) {
-        this.directorTecnico = directorTecnico;
-    }
-    public String getFotoJugador() {
-        return fotoJugador;
-    }
-    public void setFotoJugador(String fotoJugador) {
-        this.fotoJugador = fotoJugador;
-    }
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
+    public String getTeam() {return team;}
+    public void setTeam(String team) {this.team = team;}
+    public String getNumCamiseta() {return numCamiseta;}
+    public void setNumCamiseta(String numCamiseta) {this.numCamiseta = numCamiseta;}
+    public String getDirectorTecnico() {return directorTecnico;}
+    public void setDirectorTecnico(String directorTecnico) {this.directorTecnico = directorTecnico;}
     
-    
+    public String toString(){
+        return "Jugador: "+name+"  -  Team: " + team;
+    }
 }
