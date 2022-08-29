@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -112,9 +113,11 @@ public class ConsultarPartidoController implements Initializable {
                         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
                         Label fecha = null;
                         try {
-                            Date date = formatter.parse(fechaPartido);
-
-                            LocalDate someDate = LocalDate.of(date.getYear(), date.getMonth() + 1, date.getDay() + 1);
+                            Date date = (Date)formatter.parse(fechaPartido);
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(date);
+                            
+                            LocalDate someDate = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) +1, calendar.get(Calendar.DAY_OF_MONTH));
                             String dia = someDate.getDayOfWeek().toString();
                             fecha = new Label(dia.substring(0, 1).toUpperCase() + dia.substring(1).toLowerCase()
                                     + " " + Integer.parseInt(datoFecha[0]) + " " + someDate.getMonth().name());
@@ -154,7 +157,7 @@ public class ConsultarPartidoController implements Initializable {
                         paisRight.getChildren().addAll(nombreRight, imgvRight);
                         paisRight.setSpacing(5);
 
-                        if (dato[5].compareTo(dato[8]) > 0) {
+                        if (dato[5].compareTo(dato[8]) < 0) {
                             puntaje.setText(dato[6] + " - " + dato[7]);
                             containerDetalles.getChildren().addAll(detalles, paisLeft, puntaje, paisRight);
                         } else {
