@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espol.poo.g6.p.DetallesDeEquiposController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="750.0">
+         <children>
+            <Label text="Detalle de Equipos">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="lblequipo1" text="Equipo1" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="170.0" prefWidth="600.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="lblequipo2" text="Equipo2" />
+         </children>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="170.0" prefWidth="600.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="Nombre de jugador" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>
