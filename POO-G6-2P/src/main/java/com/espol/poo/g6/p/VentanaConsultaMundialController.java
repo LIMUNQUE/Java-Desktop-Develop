@@ -146,7 +146,14 @@ public class VentanaConsultaMundialController implements Initializable {
         });
 
     }
-
+    
+    /**
+     * Este método muestra los datos generales del mundial y los añade en el gridpane en su posición
+     * requerida, además modifica el estilo de los labels.
+     * @param anioEscogido Año requerido para que concuerden los datos a la hora de leer el archivo 
+     * y se muestren los datos correctamente.
+     */
+    
     public void mostrarDatosGenerales(String anioEscogido) {
 
         ArrayList<Mundial> datosMundiales = LecturaEscrituraArchivos.LeeArchivoMundial("WorldCups.csv");
@@ -180,6 +187,14 @@ public class VentanaConsultaMundialController implements Initializable {
 
     }
 
+    /**
+     * Metodo que lee el archivo y coloca en el gridpane las posiciones que quedaron el ganador, 
+     * segundo, tercer y cuarto lugar del mundial, además modifica el estilo de lo labels.
+     * @param anioEscogido Año requerido para que concuerden los datos a la hora de leer el archivo 
+     * y se muestren los datos correctamente.
+     */
+    
+    
     public void mostrarPremios(String anioEscogido) {
 
         ArrayList<Mundial> datosMundiales = LecturaEscrituraArchivos.LeeArchivoMundial("WorldCups.csv");
@@ -208,6 +223,21 @@ public class VentanaConsultaMundialController implements Initializable {
 
     }
 
+    /**
+     * Metodo lee el nombre de la imagen y coloca la bandera correspondiente del ganador, segundo, 
+     * tercer y cuarto lugar en el mundial en la posición requerida en el gridpane.
+     * @param anioEscogido Año requerido para que concuerden los datos a la hora de leer el archivo 
+     * y se muestren los datos correctamente.
+     * @param ganador Dato del país ganador requerido para concatenarlo en la lectura de la imagen y 
+     * devuelva la bandera de la imagen del ganador. 
+     * @param segundo Dato del país en segundo lugar requerido para concatenarlo en la lectura de la 
+     * imagen y devuelva la bandera de la imagen del segundo lugar.
+     * @param tercero Dato del país en tercero lugar requerido para concatenarlo en la lectura de la 
+     * imagen y devuelva la bandera de la imagen del tercero lugar.
+     * @param cuarto Dato del país en cuarto lugar requerido para concatenarlo en la lectura de la 
+     * imagen y devuelva la bandera de la imagen del cuarto lugar.
+     */
+    
     public void mostrarImagenesPremios(String anioEscogido, String ganador,
             String segundo, String tercero, String cuarto) {
 
@@ -276,6 +306,20 @@ public class VentanaConsultaMundialController implements Initializable {
         nuevaSeccion.add(banderaCuarto, 1, 4);
 
     }
+    
+    /**
+     * Método que utiliza un for each para recorrer y colocar las imagenes de la o las copas que ha 
+     * ganado un equipo en los distintos mundiales que ha participado.
+     * 
+     * @param primero Dato primero requerido para comparar con los ganadores de los distintos años con el
+     * nombre del país para que cuando concuerde asignarle una copa.
+     * @param segundo Dato segundo requerido para comparar con los segundos lugares de los distintos años
+     * con el nombre del país en segundo lugar para que cuando concuerde asignarle una copa.
+     * @param tercero Dato tercero requerido para comparar con los terceros lugares de los distintos años
+     * con el nombre del país en tercero lugar para que cuando concuerde asignarle una copa.
+     * @param cuarto Dato cuarto requerido para comparar con los cuartos lugares de los distintos años
+     * con el nombre del país en cuarto lugar para que cuando concuerde asignarle una copa.
+     */
 
     public void mostrarCopasGanadas(String primero, String segundo, String tercero, String cuarto) {
 
@@ -330,11 +374,23 @@ public class VentanaConsultaMundialController implements Initializable {
         nuevaSeccion.add(copasCuarto, 3, 4);
 
     }
-
+    
+    /**
+     * Metodo que limpia el gridpane "nuevaSeccion".
+     */
     public void limpiarSeccion() {
         nuevaSeccion.getChildren().clear();
     }
-
+    
+    /**
+     * Metodo que tiene de finalidad validar para que cuando el usuario ingrese un año le muestre mediante
+     * un label de advertencia si en el año ingresado hubo un mundial.
+     * @param anio Año requerido para verificar mediante un contains si el año se encuentra en el array
+     * de años.
+     * @return Devuelve true si el año esta en la lista de años que se jugaron mundiales y false si no
+     * se encuentra el año proporcionado en la lista de mundiales.
+     */
+    
     public boolean verificacionAnio(String anio) {
         ArrayList<String> anios = new ArrayList<>();
         try ( BufferedReader lector = new BufferedReader(new FileReader("WorldCups.csv"))) {
