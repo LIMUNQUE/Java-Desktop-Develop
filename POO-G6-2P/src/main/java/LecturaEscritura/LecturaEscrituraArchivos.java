@@ -6,6 +6,7 @@ package LecturaEscritura;
 
 import Clases.Mundial;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,8 +27,10 @@ public class LecturaEscrituraArchivos {
                         datos[7],datos[8],datos[9]);
                 listaMundial.add(mundial);
             }
+        }catch(FileNotFoundException e){
+            System.out.println("No se ha encontrado el archivo.");
         }catch(IOException e1){
-            System.out.println("No se ha encontrado el archivo");
+            System.out.println(e1.getMessage());
         }
         return listaMundial;
     }
