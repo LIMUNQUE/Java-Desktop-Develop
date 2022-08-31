@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 /**
@@ -32,14 +33,14 @@ public class PrincipalController implements Initializable {
     @FXML
     private Button btnConsultaPartido;
     private Button btnConsultaMundial;
-    
+       
     @FXML
     private ImageView imgv;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        }   
     @FXML
     void ConsultarCopasMundiales(ActionEvent event) throws IOException {
         Stage stage = new Stage();

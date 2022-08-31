@@ -79,7 +79,7 @@ public class VentanaConsultaMundialController implements Initializable {
                 Label advertencia = new Label();
               
                 if (anioMundial.getText().equals("")) {
-                    advertencia.setText("Ingrese una fecha para consultar");
+                    advertencia.setText("Ingrese una fecha para consultar.");
                     advertencia.setStyle("-fx-font-size: 15;-fx-text-fill: red;-fx-font-weight: bold");
                     try{
                     rootVentanaMundial.getChildren().remove(2);

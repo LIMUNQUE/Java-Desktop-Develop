@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espol.poo.g6.p.PrincipalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espol.poo.g6.p.PrincipalController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -17,12 +17,15 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <ImageView fitHeight="104.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="logoMundial" fitHeight="94.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../UI/logoFifa2014.jpg" />
+               </image></ImageView>
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <ImageView fx:id="imgv" fitHeight="227.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgv" fitHeight="211.0" fitWidth="354.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../UI/WorldCup.jpg" />
                </image></ImageView>
