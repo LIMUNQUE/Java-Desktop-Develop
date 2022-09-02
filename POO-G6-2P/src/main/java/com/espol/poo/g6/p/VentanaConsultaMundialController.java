@@ -4,7 +4,6 @@
  */
 package com.espol.poo.g6.p;
 
-import Clases.AnioMundialException;
 import Clases.Mundial;
 import LecturaEscritura.LecturaEscrituraArchivos;
 import java.io.BufferedReader;

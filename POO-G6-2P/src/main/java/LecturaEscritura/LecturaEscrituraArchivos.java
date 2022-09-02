@@ -17,6 +17,11 @@ import java.util.ArrayList;
  */
 public class LecturaEscrituraArchivos {
     
+    /**
+     * Metodo que recibe un string y crea objetos de clase Mundial y los agrega en una ArrayList Mundial.
+     * @param nombreArchivo String requerido donde irá el nombre del archivo Mundial.csv
+     * @return Retorna un ArrayList que contiene objetos de clase Mundial.
+     */
     public static ArrayList<Mundial> LeeArchivoMundial(String nombreArchivo){
         ArrayList<Mundial> listaMundial = new ArrayList<>();
         try(BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo))){
