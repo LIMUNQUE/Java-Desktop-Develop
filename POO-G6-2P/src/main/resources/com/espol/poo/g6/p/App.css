@@ -1,0 +1,12 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 3 sep. 2022, 15:36:41
+    Author     : Dell
+*/
+.root{
+    -fx-background-image: url("fondo.jpg");
+    -fx-background-size: 640, 480;
+}

@@ -240,7 +240,7 @@ public class ConsultarPartidoController implements Initializable {
                                 });
 
                                 Scene scene = new Scene(root, 420, 240);
-                                stage.setScene(scene);
+                                stage.setScene(scene);          
                                 stage.show();
                             }
                         });

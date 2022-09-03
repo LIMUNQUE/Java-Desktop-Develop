@@ -47,6 +47,7 @@ public class PrincipalController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("VentanaConsultaMundial.fxml"));
         Scene scene = new Scene(root,640, 480);
         stage.setScene(scene);
+        scene.getStylesheets().add(PrincipalController.class.getResource("App.css").toExternalForm());
         stage.show();
     }
 
@@ -56,6 +57,7 @@ public class PrincipalController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("ConsultarPartido.fxml"));
         Scene scene = new Scene(root,640, 480);
         stage.setScene(scene);
+        scene.getStylesheets().add(PrincipalController.class.getResource("App.css").toExternalForm());
         stage.show();
     }
 }
