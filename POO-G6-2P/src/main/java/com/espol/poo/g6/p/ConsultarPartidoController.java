@@ -110,26 +110,26 @@ public class ConsultarPartidoController implements Initializable {
                         lblresp.setFont(new Font("Serif", 24));
 
                         //Fecha
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-                        Label fecha = null;
-                        try {
-                            Date date = (Date)formatter.parse(fechaPartido);
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(date);
-                            
-                            LocalDate someDate = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) +1, calendar.get(Calendar.DAY_OF_MONTH));
-                            String dia = someDate.getDayOfWeek().toString();
-                            fecha = new Label(dia.substring(0, 1).toUpperCase() + dia.substring(1).toLowerCase()
-                                    + " " + Integer.parseInt(datoFecha[0]) + " " + someDate.getMonth().name());
-
-                            fecha.setFont(new Font("Serif", 20));
-                            fecha.setPadding(new Insets(10, 0, 20, 0));
-                        } catch (ParseException | RuntimeException ex) {
-                            System.out.println(ex.getMessage());
-                        }
+//                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+//                        Label fecha = null;
+//                        try {
+//                            Date date = (Date)formatter.parse(fechaPartido);
+//                            Calendar calendar = Calendar.getInstance();
+//                            calendar.setTime(date);
+//                            
+//                            LocalDate someDate = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) +1, calendar.get(Calendar.DAY_OF_MONTH));
+//                            String dia = someDate.getDayOfWeek().toString();
+//                            fecha = new Label(dia.substring(0, 1).toUpperCase() + dia.substring(1).toLowerCase()
+//                                    + " " + Integer.parseInt(datoFecha[0]) + " " + someDate.getMonth().name());
+//
+//                            fecha.setFont(new Font("Serif", 20));
+//                            fecha.setPadding(new Insets(10, 0, 20, 0));
+//                        } catch (ParseException | RuntimeException ex) {
+//                            System.out.println(ex.getMessage());
+//                        }
 
                         //DETALLES
-                        Label fechaActual = new Label(dato[1]);
+//                        Label fechaActual = new Label(dato[1]);
                         Label lugar = new Label(dato[3]);
                         Label ciudad = new Label(dato[4]);
                         HBox containerDetalles = new HBox();
@@ -142,7 +142,7 @@ public class ConsultarPartidoController implements Initializable {
                             grupo = new Label(cbxFase.getValue());
                         }
                         grupo.setFont(new Font("Serif", 13));
-                        detalles.getChildren().addAll(fechaActual, grupo, lugar, ciudad);
+                        detalles.getChildren().addAll( grupo, lugar, ciudad);
 
                         //Pais1
                         HBox paisLeft = new HBox();
@@ -169,7 +169,7 @@ public class ConsultarPartidoController implements Initializable {
                         containerDetalles.setAlignment(Pos.CENTER);
                         //Añadir al container
                         HBox hboxFecha = new HBox();
-                        hboxFecha.getChildren().addAll(fecha);
+                        //hboxFecha.getChildren().addAll(fecha);
                         VBox botones = new VBox();
                         String estilo = "-fx-text-fill: white;-fx-font-weight: bold;-fx-background-color:#40abe8";
                         Button btnExportar = new Button("Exportar resultados de grupos");
@@ -246,6 +246,7 @@ public class ConsultarPartidoController implements Initializable {
                         });
 
                         btnVer.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
                             public void handle(ActionEvent e2) {
                                 //Abrir la ventana de detalles
                                 try{
@@ -298,5 +299,5 @@ public class ConsultarPartidoController implements Initializable {
         cbx1.getItems().addAll(countriesLeft);
         cbx2.getItems().addAll(countriesRight);
     }
-
+    
 }

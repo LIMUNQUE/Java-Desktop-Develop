@@ -17,12 +17,13 @@ public class Jugador implements Serializable{
     private String directorTecnico;
     private String team;
     private String name;
-    /*private String roundID;
     private String matchID;
+    /*private String roundID;
     private String coachName;
     private String shirtNumber;
     private String position;*/
-    public Jugador(String nombre,String team, String numCamiseta, String directorTecnico){
+    public Jugador(String matchID, String nombre,String team, String numCamiseta, String directorTecnico){
+        this.matchID = matchID;
         this.name = nombre;
         this.team = team;
         this.numCamiseta = numCamiseta;
@@ -37,6 +38,8 @@ public class Jugador implements Serializable{
     public void setNumCamiseta(String numCamiseta) {this.numCamiseta = numCamiseta;}
     public String getDirectorTecnico() {return directorTecnico;}
     public void setDirectorTecnico(String directorTecnico) {this.directorTecnico = directorTecnico;}
+    public String getMatchID() {return matchID;}
+    public void setMatchID(String matchID) {this.matchID = matchID;}
     
     public String toString(){
         return "Jugador: "+name+"  -  Team: " + team;

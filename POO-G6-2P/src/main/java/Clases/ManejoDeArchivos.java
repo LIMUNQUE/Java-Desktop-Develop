@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 /**
@@ -23,7 +25,7 @@ public class ManejoDeArchivos {
     Image a;
     public static ArrayList<String[]> Leer(String path,String divissor){
         ArrayList<String[]> texto = new ArrayList<>();
-        try(BufferedReader reader = new BufferedReader(new FileReader(path))){
+        try(BufferedReader reader = new BufferedReader(new FileReader(path,StandardCharsets.UTF_8))){
             String linea;
             while((linea=reader.readLine())!=null){
                 texto.add(linea.split(divissor));
