@@ -48,6 +48,7 @@ public class PrincipalController implements Initializable {
         Scene scene = new Scene(root,640, 480);
         stage.setScene(scene);
         scene.getStylesheets().add(PrincipalController.class.getResource("App.css").toExternalForm());
+        stage.setTitle("Consultar mundiales");
         stage.show();
     }
 
@@ -58,6 +59,7 @@ public class PrincipalController implements Initializable {
         Scene scene = new Scene(root,640, 480);
         stage.setScene(scene);
         scene.getStylesheets().add(PrincipalController.class.getResource("App.css").toExternalForm());
+        stage.setTitle("Consultar partidos");
         stage.show();
     }
 }
