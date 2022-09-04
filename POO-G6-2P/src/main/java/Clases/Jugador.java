@@ -22,8 +22,8 @@ public class Jugador implements Serializable{
     private String coachName;
     private String shirtNumber;
     private String position;*/
-    public Jugador(String matchhID,String nombre,String team, String numCamiseta, String directorTecnico){
-        this.matchID = matchID;
+    public Jugador(String nombre,String team, String numCamiseta, String directorTecnico){
+//        this.matchID = matchID;
         this.name = nombre;
         this.team = team;
         this.numCamiseta = numCamiseta;

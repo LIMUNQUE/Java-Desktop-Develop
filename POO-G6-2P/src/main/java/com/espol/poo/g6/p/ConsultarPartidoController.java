@@ -193,13 +193,17 @@ public class ConsultarPartidoController implements Initializable {
                                 Stage stage = new Stage();
                                 VBox root = new VBox();
                                 Label msg = new Label("¿Está seguro que desea exportar el grupo de jugadores seleccionado?");
-                                msg.setFont(new Font("Serif", 15));
-                                Button btnAceptar = new Button("aceptar");
+                                msg.setStyle("-fx-font-size: 12;-fx-text-fill: black;-fx-font-weight: bold");
+                                msg.setPadding(new Insets(0,5,0,5));
+                                Button btnAceptar = new Button("Aceptar");
                                 Button btnCancelar = new Button("Cancelar");
+                                btnAceptar.setStyle("-fx-background-color: #259bd7;-fx-text-fill: white;-fx-background-radius:4");
+                                btnCancelar.setStyle("-fx-background-color: #259bd7;-fx-text-fill: white;-fx-background-radius:4");
                                 HBox buttons = new HBox();
                                 buttons.getChildren().addAll(btnAceptar, btnCancelar);
-                                buttons.setSpacing(10);
+                                buttons.setSpacing(20);
                                 buttons.setAlignment(Pos.CENTER_RIGHT);
+                                buttons.setPadding(new Insets(0,20,0,0));
                                 root.getChildren().addAll(msg, buttons);
                                 root.setSpacing(40);
                                 root.setAlignment(Pos.CENTER);
@@ -242,7 +246,9 @@ public class ConsultarPartidoController implements Initializable {
                                 });
                                 //Presentamos la escena
                                 Scene scene = new Scene(root, 420, 240);
-                                stage.setScene(scene);          
+                                stage.setScene(scene);
+                                stage.setTitle("Exportar equipos");
+                                scene.getStylesheets().add(App.class.getResource("App.css").toExternalForm());
                                 stage.show();
                             }
                         });
@@ -256,6 +262,7 @@ public class ConsultarPartidoController implements Initializable {
                                 Parent root = FXMLLoader.load(getClass().getResource("DetalleDeEquipos.fxml"));
                                 Scene scene = new Scene(root);
                                 stage.setScene(scene);
+                                stage.setTitle("Detalles de equipo");
                                 stage.show();
                                 } catch (IOException e){
                                     e.printStackTrace();

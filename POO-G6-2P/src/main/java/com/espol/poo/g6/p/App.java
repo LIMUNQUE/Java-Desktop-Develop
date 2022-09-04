@@ -23,6 +23,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("Principal"), 640, 480);
         stage.setScene(scene);
         scene.getStylesheets().add(App.class.getResource("App.css").toExternalForm());
+        stage.setTitle("Consulta de datos históricos");
         stage.show();
     }
 
