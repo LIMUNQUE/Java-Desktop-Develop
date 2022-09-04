@@ -105,7 +105,14 @@ public class DetallesDeEquiposController implements Initializable {
         jugadoresE2.setContent(cartillas2);
     }
 
-    
+    /**
+     * Este método modifica cada cartilla del conjunto de cartillas de jugadores 
+     * setea el imageView y el label con la imagen y el nombre del jugador respectivamente
+     * @param imgv Imagen que setea después de entre 5 o 15 segundos
+     * @param label Texto que se va a setear
+     * @param nombre El nombre del jugador
+     * @param jugador el jugador con sus datos
+     */
     public void cargarImagenHilo(ImageView imgv, Label label, String nombre, String[] jugador){
         Thread hilo = new Thread(new Runnable(){
            
@@ -137,6 +144,12 @@ public class DetallesDeEquiposController implements Initializable {
         hilo.start();
     }
     
+    /**
+     * Este método crea una ventana nueva  y recibe la imagen que se aplica al ImageView de la ventana 
+     * y los datos del jughador que se setean en unos labels
+     * @param imagen la imagen que se setea en el ImageView
+     * @param jugador son los datos del jugador
+     */
     public void cargarDetalleIndividual(Image imagen, String[] jugador){
         VBox root = new VBox();
         root.setPrefSize(320, 300);
@@ -174,6 +187,14 @@ public class DetallesDeEquiposController implements Initializable {
         
     }
     
+    /**
+     * Esté método modifica el contador con 10 segundos 
+     * y tiene un runlater para el propósito, recibe el 
+     * label que se modifica y se aplica un sleep de 1 segundo dentro del hilo
+     * además al finalizar el hilo cierra la ventana en la que se encuentra el label
+     * @param l el label que hace de contador
+     * @return retorna un hilo
+     */
     public Thread crearThreadNuevaVentana(Label l) {
         Thread hilo = new Thread(new Runnable(){
             @Override
