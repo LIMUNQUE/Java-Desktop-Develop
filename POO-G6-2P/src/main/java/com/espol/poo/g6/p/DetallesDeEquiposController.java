@@ -120,11 +120,12 @@ public class DetallesDeEquiposController implements Initializable {
             public void run(){
                 try (FileInputStream input = new FileInputStream(App.pathJugadores + nombre + ".jpg")){
                     Random rd = new Random();
-                    int naleatorio = rd.nextInt(5000,15001);
+//     Ocurre un error de compilacion por al hacer el ejecutable por eso esta comentada esta línea.
+//                  int naleatorio = rd.nextInt(5000,15001);
                     Image imagen = new Image(input);
                     imgv.setFitHeight(125);
                     imgv.setFitWidth(100);
-                    Thread.sleep(naleatorio);
+                    Thread.sleep(7500);
                     Platform.runLater(() -> {
                         imgv.setImage(imagen);
                         imgv.setOnMouseClicked(t -> cargarDetalleIndividual(imagen, jugador));
