@@ -232,7 +232,7 @@ public class ConsultarPartidoController implements Initializable {
                                             if (dato[2].equals(path)) {
                                                 for (String[] datoJugador : textoJugadores) {
                                                     if (datoJugador[0].equals(dato[16]) && datoJugador[1].equals(dato[17])) {
-                                                        Jugador j = new Jugador(datoJugador[0],datoJugador[6], datoJugador[2], datoJugador[5], datoJugador[3]);
+                                                        Jugador j = new Jugador(datoJugador[0],datoJugador[6], datoJugador[2], datoJugador[5]);
                                                         jugadores.add(j);
                                                     }
                                                 }
