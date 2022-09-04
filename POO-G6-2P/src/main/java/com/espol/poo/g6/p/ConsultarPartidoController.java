@@ -181,11 +181,12 @@ public class ConsultarPartidoController implements Initializable {
                         botones.getChildren().addAll(btnExportar, btnVer);
                         botones.setAlignment(Pos.CENTER);
                         botones.setSpacing(10);
+                        //Se muestra toda la informacion
                         infoContainer.getChildren().clear();
                         infoContainer.getChildren().addAll(lblresp, hboxFecha, containerDetalles, botones);
                         infoContainer.setSpacing(5);
 
-                        //Lógica de los botones
+                        //Se crea una nueva ventana al dar click
                         btnExportar.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent e) {
@@ -202,7 +203,7 @@ public class ConsultarPartidoController implements Initializable {
                                 root.getChildren().addAll(msg, buttons);
                                 root.setSpacing(40);
                                 root.setAlignment(Pos.CENTER);
-
+                                //Lógica de los botones
                                 btnCancelar.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e2) {
@@ -210,7 +211,7 @@ public class ConsultarPartidoController implements Initializable {
                                         s.close();
                                     }
                                 });
-
+                                //Al presionar el boton aceptar
                                 btnAceptar.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e2) {
@@ -221,30 +222,31 @@ public class ConsultarPartidoController implements Initializable {
                                         } else {
                                             path = cbxFase.getValue() + " " + cbxGrupos.getValue();
                                         }
-
+                                        //Busca en el archivo los datos que concuerden y crea un objeto jugador para añadirlo a la lista
                                         ArrayList<Jugador> jugadores = new ArrayList<>();
                                         for (String[] dato : texto) {
                                             if (dato[2].equals(path)) {
                                                 for (String[] datoJugador : textoJugadores) {
                                                     if (datoJugador[0].equals(dato[16]) && datoJugador[1].equals(dato[17])) {
-                                                        Jugador j = new Jugador(datoJugador[6], datoJugador[2], datoJugador[5], datoJugador[3]);
+                                                        Jugador j = new Jugador(datoJugador[0],datoJugador[6], datoJugador[2], datoJugador[5], datoJugador[3]);
                                                         jugadores.add(j);
                                                     }
                                                 }
                                             }
                                         }
+                                        //Serializamos la lista
                                         ManejoDeArchivos.serializarObjeto("jugadores.Dat", jugadores);
                                         System.out.println("Se pudo generar el archivo correctamente");
 
                                     }
                                 });
-
+                                //Presentamos la escena
                                 Scene scene = new Scene(root, 420, 240);
                                 stage.setScene(scene);          
                                 stage.show();
                             }
                         });
-
+                        //Al darle click al boton ver abre detalles de equipos
                         btnVer.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent e2) {
@@ -263,7 +265,7 @@ public class ConsultarPartidoController implements Initializable {
                     }
                 }
             }
-
+            //En el caso que no se encuentra el partido se da el mensaje
             puntaje.setFont(new Font("Serif", 24));
             infoContainer.setAlignment(Pos.CENTER);
             if (puntaje.getText() == null) {
@@ -273,7 +275,7 @@ public class ConsultarPartidoController implements Initializable {
             }
         }
     }
-
+    //Se recorre el texto leido
     public void Actualizar() {
         cbx1.getItems().clear();//Se limpian los combobox
         cbx2.getItems().clear();
