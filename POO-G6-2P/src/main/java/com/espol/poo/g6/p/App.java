@@ -17,6 +17,7 @@ public class App extends Application {
     public static String pathImg="src/main/resources/imagenesMundial/";
     public static String pathPaises="src/main/resources/Paises/";
     public static String pathUI="src/main/resources/UI/";
+    public static String pathJugadores="src/main/resources/Jugadores/";
 
     @Override
     public void start(Stage stage) throws IOException {
